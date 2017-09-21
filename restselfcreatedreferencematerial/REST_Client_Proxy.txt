@@ -1,0 +1,28 @@
+Read this document only after you've understood Jersey, JSON Providers (Jackson, Moxy) etc.
+https://jersey.java.net/documentation/latest/index.html
+
+Refer to RestTest.java (jerseyclient project) and understand all the test methods thoroughly.
+
+Now research point: How does WebResourceFactory class perform REST client calls using Client Proxy mechanism?
+
+EMECWebResourceFactory is responsible for creating a WebTarget for a REST WS (say CustomerWS) using the annotation defined on it and using the Proxy class (Reflection API).
+
+Now the target until the CustomerWS (http://localhost:8080/eitaas-service/rest/customer) is ready. The object returned by EMECWebResourceFactory on calling its getCustomerWS() method is not an actual CustomerWSImpl.java object but a proxy object which implements CustomerWS.java interface and hence the reference type CustomerWS custWS = getCustomerWS(); can hold the proxy object.
+
+Now the CustomerController has a proxy object for CustomerWS but what good it can do without any invocation? Hence, EMECWebResourceFactory has also implemented invoke() method because it implements the interface java.lang.reflect.InvocationHandler. Now when you sweetly invoke a method on CustomerWS's proxy object thinking it to be an actual object the call actually goes to the invoke() method of EMECWebResourceFactory. In the invoke() method the EMECWebResourceFactory again finds out the remaining path from annotation on that method (CustomerWS) and append to the existing WebTarget for CustomerWS. Then it actually makes a REST WS call and the data is fetched and returned. However, Controller side thinks that data is directly returned by the object
+
+See the example for method invocation:
+
+    @GET
+    @Path("/search/{userName}")
+    @Consumes({ MediaType.APPLICATION_JSON})
+    @Produces({ MediaType.APPLICATION_JSON})
+    public Customer findCustomerByUserName(@QueryParam("userName") String userName)
+
+We already have the WebTarget ready for CustomerWS (http://localhost:8080/eitaas-service/rest/customer) before making this method call using reflection. Now when method is invoked we get additional path, and parameters to be passed to the REST call.
+
+http://localhost:8080/eitaas-service/rest/customer/search/{userName}
+
+Also in that invoke() method you will see that we append OAuth header before making the REST call.
+
+This is how the magic happens. 

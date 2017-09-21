@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.nit.rest.client</groupId>
+  <artifactId>jerseyclient</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>jerseyclient</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.6</java.version>
+    <!-- maven.compiler.source -->
+	<!-- <maven.compiler.target>1.8</maven.compiler.target> -->
+    <jersey2.version>2.25</jersey2.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    
+    <dependency>
+         <groupId>org.glassfish.jersey.core</groupId>
+         <artifactId>jersey-client</artifactId>
+         <version>${jersey2.version}</version>
+    </dependency>
+    
+    
+    <dependency>
+	    <groupId>org.glassfish.jersey.media</groupId>
+	    <artifactId>jersey-media-moxy</artifactId>
+	    <version>${jersey2.version}</version>
+	</dependency> 
+    
+    <dependency>
+	    <groupId>org.glassfish.jersey.media</groupId>
+	    <artifactId>jersey-media-jaxb</artifactId>
+	    <version>2.25</version>
+	</dependency>
+    
+  </dependencies>
+  
+  <build>
+    <finalName>jerseyclient</finalName>
+    <plugins>
+    <!-- Nitin, you specified this plugin so that maven compiler can use a different JDK (8) from what has been specified in JAVA_HOME -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.2</version>
+        <configuration>
+          <verbose>true</verbose>
+          <fork>true</fork>
+          <executable>C:/Program Files/Java/jdk1.6.0_45/bin/javac</executable>
+          <compilerVersion>1.6</compilerVersion>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+  
+  
+</project>

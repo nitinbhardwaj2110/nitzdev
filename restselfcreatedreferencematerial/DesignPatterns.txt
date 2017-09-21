@@ -1,0 +1,41 @@
+
+https://www.tutorialspoint.com/design_pattern/design_pattern_overview.htm
+Design Patterns explained along with UML: http://www.developer.com/design/article.php/3309461/Using-Design-Patterns-in-UML.htm
+
+3 Main Types: 
+Creational: Factory, Abstract Factory, Singleton, Builder, Prototype
+Structural: Adapter, Filter or Criteria, Composite, Decorator, Facade, Flyweight, Proxy
+Behavioral Patterns: Chain of Responsibility, Command, Iterator, Observer, Visitor, Business Delegate, Service Locator
+
+Design Patterns used in EMEC:
+
+1. Adapter pattern (Structural pattern): LDAP Services Layer
+The Business layer has different interfaces which cater to the management (create, edit, delete) of SMEs and their employees and departments.
+The core LDAP APIs exposed by the OPENDJ LDAP server are completely different and cryptic to understand.
+The LDAP services layer that I wrote acts as an Adapter layer between Business layer and the OPENDJ LDAP API layer. Further LDAP Services layer was exposed completely as REST WS layer.
+It can't be called as a Proxy pattern because a proxy object exposes the same method signatures as that of the object which are proxied. In LDAPService layer we wrote interfaces to hide the cryptic methods behind our suitable interfaces apt to be used according to our EMEC's need.
+
+2. Factory + Adapter + Proxy Pattern: EitaasRestClientFactory
+Factory in the sense that different types of RESTWS object given back.
+Adapter in the sense that Controller layer is only concerned with calling the methods on REST-WS interfaces as normal methods. It doesn't know that behind the scenes the method call is being converted to a REST call to the appropriate REST WS on services layer.
+Proxy in the sense that each method invocation of the REST WS interface is handled by the proxy object of the same type which then calls the appropriate REST WS using the parameters passed to it at runtime.
+
+3. Composite Pattern: Is LDAPEntry an example of Composite pattern?
+
+4. Facade Pattern: REST WS Layer
+The REST WS layer in EMEC is a facade layer. A single call to a REST WS layer internally calls many services to get things done. For Ex: CustomerServiceWS.registerCustomer() internally calls SubscriptionService, OfferService, LDAPServices, CustomerService
+Used to reduce the number of network calls. In our case network calls to eitaas-services
+
+5. Business Delegate pattern: In this we a BusinessLookUpService is there which looks up for a certain BusinessService which can handle the request delegated by BusinessDelegate which in turn was called up by the Client.
+However, with the introduction of Dependency Injection (Spring, EJB3) this has become somewhat obsolete as we don't lookup the services now but instead let the framework(Spring DI, EJB3 DI) do it for us at the time of wiring.
+
+6. Service Locator pattern: The service locator design pattern is used when we want to locate various services using JNDI lookup. Considering high cost of looking up JNDI for a service, Service Locator pattern makes use of caching technique. For the first time a service is required, Service Locator looks up in JNDI and caches the service object. Further lookup or same service via Service Locator is done in its cache which improves the performance of application to great extent.
+As of now you can handle this pattern also using a Dependency Injection framework (Spring DI, EJB3 DI) in which the JNDI objects are preconfigured in Application Context and then can be injected like normal beans.
+
+
+
+
+
+
+
+https://www.tutorialspoint.com/java8/java8_streams.htm

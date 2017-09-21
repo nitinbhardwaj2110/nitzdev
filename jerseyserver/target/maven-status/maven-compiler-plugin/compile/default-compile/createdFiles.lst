@@ -1,0 +1,7 @@
+com\nit\entity\Department.class
+com\nit\rest\RestApplication.class
+com\nit\rest\TrickOrTreatWSImpl.class
+com\nit\entity\Employee.class
+com\nit\entity\Gender.class
+com\nit\rest\TrickOrTreatWS.class
+com\nit\rest\config\JsonMoxyConfigurationContextResolver.class

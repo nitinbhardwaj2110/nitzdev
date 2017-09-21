@@ -1,0 +1,5 @@
+com\nit\rest\client\RestTest.class
+com\nit\client\entity\Department.class
+com\nit\client\entity\Gender.class
+com\nit\client\entity\Employee.class
+com\nit\rest\client\App.class
